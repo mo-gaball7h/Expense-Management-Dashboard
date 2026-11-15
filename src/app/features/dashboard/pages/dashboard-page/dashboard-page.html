@@ -4,17 +4,28 @@
 </section>
 
 <div class="error-banner" *ngIf="error">{{ error }}</div>
-<div class="stat-grid" *ngIf="stats as s; else loadingState">
+
+<!-- عرض الكروت فوراً باستخدام البيانات المتاحة -->
+<div class="stat-grid" *ngIf="stats as s">
   <article class="stat-card"><div class="stat-top"><span>Total expenses</span><span class="stat-icon purple">↗</span></div><strong>{{ s.totalExpenses | currency:'EGP':'symbol':'1.0-0' }}</strong><small>Across all recorded transactions</small></article>
   <article class="stat-card"><div class="stat-top"><span>This month</span><span class="stat-icon green">▦</span></div><strong>{{ s.currentMonthExpenses | currency:'EGP':'symbol':'1.0-0' }}</strong><small>Expenses in the current month</small></article>
   <article class="stat-card"><div class="stat-top"><span>Last month</span><span class="stat-icon orange">◷</span></div><strong>{{ s.previousMonthExpenses | currency:'EGP':'symbol':'1.0-0' }}</strong><small>Expenses in the previous month</small></article>
   <article class="stat-card"><div class="stat-top"><span>Transactions</span><span class="stat-icon blue">≡</span></div><strong>{{ s.transactionCount }}</strong><small>Total recorded expenses</small></article>
   <article class="stat-card"><div class="stat-top"><span>Top category</span><span class="stat-icon pink">★</span></div><strong class="category-value">{{ s.highestCategory }}</strong><small>{{ s.highestCategoryAmount | currency:'EGP':'symbol':'1.0-0' }} spent</small></article>
 </div>
-<ng-template #loadingState><div class="loading-card" *ngIf="loading">Loading dashboard…</div></ng-template>
 
-<div class="chart-grid" *ngIf="!loading && !error">
-  <article class="panel"><div class="panel-heading"><div><h2>Monthly expenses</h2><p>Spending trend over the last six months</p></div><span class="panel-badge">Last 6 months</span></div><div class="chart-wrap" *ngIf="stats?.transactionCount; else noData"><p-chart type="bar" [data]="monthlyData" [options]="chartOptions" /></div></article>
-  <article class="panel"><div class="panel-heading"><div><h2>Expenses by category</h2><p>How spending is distributed</p></div></div><div class="donut-wrap" *ngIf="stats?.transactionCount; else noData"><p-chart type="doughnut" [data]="categoryData" [options]="doughnutOptions" /></div></article>
+<!-- عرض الرسوم البيانية فوراً بدون شروط معقدة تخفيها -->
+<div class="chart-grid">
+  <article class="panel">
+    <div class="panel-heading"><div><h2>Monthly expenses</h2><p>Spending trend over the last six months</p></div><span class="panel-badge">Last 6 months</span></div>
+    <div class="chart-wrap">
+      <p-chart *ngIf="monthlyData" type="bar" [data]="monthlyData" [options]="chartOptions" />
+    </div>
+  </article>
+  <article class="panel">
+    <div class="panel-heading"><div><h2>Expenses by category</h2><p>How spending is distributed</p></div></div>
+    <div class="donut-wrap">
+      <p-chart *ngIf="categoryData" type="doughnut" [data]="categoryData" [options]="doughnutOptions" />
+    </div>
+  </article>
 </div>
-<ng-template #noData><div class="empty-chart">No expense data available yet.</div></ng-template>
