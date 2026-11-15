@@ -1,4 +1,50 @@
-<section class="page-heading"><div><p class="eyebrow">ANALYTICS</p><h1>Reports</h1><p class="muted">Understand where the company budget is going.</p></div></section>
-<div class="report-summary"><span>Total recorded spending</span><strong>{{ total | currency:'EGP':'symbol':'1.0-0' }}</strong></div>
-<div class="report-grid"><article class="report-panel"><h2>Monthly expenses</h2><p>Spending over the last six months</p><div class="chart"><p-chart type="bar" [data]="monthlyData" [options]="options" *ngIf="monthlyData; else loadingState" /></div></article><article class="report-panel"><h2>Category breakdown</h2><p>Spending by category</p><div class="chart"><p-chart type="doughnut" [data]="categoryData" [options]="options" *ngIf="categoryData; else loadingState" /></div></article></div>
-<ng-template #loadingState><div class="loading">Preparing report…</div></ng-template>
+<div class="reports-container">
+  
+  <!-- Breadcrumb / Workspace Path -->
+  <div class="breadcrumb-path">
+    <span class="text-slate-400">Workspace</span>
+    <span class="text-slate-300">›</span>
+    <span class="text-slate-700 font-medium">Expense management</span>
+  </div>
+
+  <!-- Header Section -->
+  <div class="reports-header">
+    <span class="analytics-badge">ANALYTICS</span>
+    <h1 class="reports-title">Reports</h1>
+    <p class="reports-subtitle">Understand where the company budget is going.</p>
+  </div>
+
+  <!-- Total Recorded Spending Card -->
+  <div class="total-card">
+    <span class="total-label">Total recorded spending</span>
+    <h2 class="total-amount">EGP138,500</h2>
+  </div>
+
+  <!-- Charts Grid Section -->
+  <div class="charts-grid">
+    
+    <!-- Monthly Expenses Card -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <h3 class="chart-title">Monthly expenses</h3>
+        <p class="chart-subtitle">Spending over the last six months</p>
+      </div>
+      <div class="chart-wrapper">
+        <p-chart *ngIf="monthlyData" type="bar" [data]="monthlyData" [options]="options" styleClass="w-full h-full"></p-chart>
+      </div>
+    </div>
+
+    <!-- Category Breakdown Card -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <h3 class="chart-title">Category breakdown</h3>
+        <p class="chart-subtitle">Spending by category</p>
+      </div>
+      <div class="chart-wrapper">
+        <p-chart *ngIf="categoryData" type="doughnut" [data]="categoryData" [options]="options" styleClass="w-full h-full"></p-chart>
+      </div>
+    </div>
+
+  </div>
+
+</div>
