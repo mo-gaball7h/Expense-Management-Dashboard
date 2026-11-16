@@ -90,7 +90,7 @@
   margin-bottom: 12px;
 }
 
-/* التعديلات الجذرية لإزالة أي Dark mode من الجداول، الـ Paginator، الحقول، والـ Dialogs */
+/* التعديلات الجذرية لإزالة أي Dark mode وضبط الحواف بالكامل */
 ::ng-deep {
   .p-datatable {
     background: transparent !important;
@@ -150,20 +150,53 @@
     }
   }
 
-  /* تنسيق الـ Dropdowns، الـ DatePicker، وحقول الإدخال لتكون بيضاء ونظيفة */
-  .p-select, .p-datepicker, .p-inputtext {
+  /* تصحيح القوائم المنسدلة (p-select) لضمان انتظام الحدود والحواف بالكامل */
+  .p-select {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 10px !important;
+    color: #0f172a !important;
+    box-shadow: none !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 2px 4px !important;
+
+    &:not(.p-disabled):hover {
+      border-color: #94a3b8 !important;
+    }
+
+    &:not(.p-disabled).p-focus {
+      border-color: #4f46e5 !important;
+      box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1) !important;
+    }
+
+    .p-select-label {
+      color: #0f172a !important;
+      background: transparent !important;
+      padding: 8px 12px !important;
+    }
+
+    .p-select-dropdown {
+      color: #64748b !important;
+      background: transparent !important;
+      width: 2.5rem !important;
+    }
+  }
+
+  /* تنسيق الـ DatePicker وحقول الإدخال لتكون بيضاء ونظيفة */
+  .p-datepicker, .p-inputtext {
     background: #ffffff !important;
     border: 1px solid #cbd5e1 !important;
     color: #0f172a !important;
     border-radius: 10px !important;
 
-    .p-select-label, input {
+    input {
       color: #0f172a !important;
       background: #ffffff !important;
     }
   }
 
-  /* تنسيق نافذة الـ Dialog (مثل Add Expense) لتكون بيضاء وفخمة بالكامل */
+  /* تنسيق نافذة الـ Dialog لتكون بيضاء وفخمة بالكامل */
   .p-dialog {
     background: #ffffff !important;
     border: 1px solid #e2e8f0 !important;
@@ -188,6 +221,41 @@
       background: #ffffff !important;
       border-top: 1px solid #f1f5f9 !important;
       padding: 16px 24px !important;
+    }
+  }
+
+  /* تنسيق رسالة تأكيد الحذف وزر Cancel الرمادي */
+  .p-confirm-dialog {
+    background: #ffffff !important;
+    border-radius: 16px !important;
+
+    .p-confirm-dialog-reject,
+    .p-confirmdialog-rejectbutton,
+    button.p-button-secondary {
+      background: #f1f5f9 !important;
+      border: 1px solid #cbd5e1 !important;
+      color: #475569 !important;
+      border-radius: 10px !important;
+      box-shadow: none !important;
+      
+      &:hover {
+        background: #e2e8f0 !important;
+        border-color: #94a3b8 !important;
+        color: #0f172a !important;
+      }
+    }
+
+    .p-confirm-dialog-accept,
+    .p-confirmdialog-acceptbutton,
+    button.p-button-danger {
+      background: #ef4444 !important;
+      border: none !important;
+      color: #ffffff !important;
+      border-radius: 10px !important;
+      
+      &:hover {
+        background: #dc2626 !important;
+      }
     }
   }
 }

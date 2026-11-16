@@ -84,6 +84,7 @@ export class ExpenseListPage implements OnInit, OnDestroy {
       acceptLabel: 'Delete',
       rejectLabel: 'Cancel',
       acceptButtonStyleClass: 'p-button-danger',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => this.service.deleteExpense(expense.id).subscribe({
         next: () => this.messages.add({ severity: 'success', summary: 'Deleted', detail: 'Expense deleted successfully.' }),
         error: () => this.messages.add({ severity: 'error', summary: 'Error', detail: 'Could not delete the expense.' })
