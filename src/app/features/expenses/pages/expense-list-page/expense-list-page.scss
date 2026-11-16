@@ -90,7 +90,7 @@
   margin-bottom: 12px;
 }
 
-/* إصلاح الجدول وإزالة أي خلفيات سوداء نهائياً */
+/* التعديلات الجذرية لإزالة أي Dark mode من الجداول، الـ Paginator، الحقول، والـ Dialogs */
 ::ng-deep {
   .p-datatable {
     background: transparent !important;
@@ -119,15 +119,75 @@
     }
   }
 
-  /* تنسيق الـ Dropdowns والـ DatePicker لتكون بيضاء وفاتحة بالكامل */
-  .p-select, .p-datepicker {
+  /* تنسيق الـ Paginator السفلي ليصبح أبيض وفاتح تماماً */
+  .p-paginator {
+    background: #ffffff !important;
+    border-top: 1px solid #e2e8f0 !important;
+    color: #1e293b !important;
+    padding: 12px !important;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    
+    .p-paginator-pages .p-paginator-page {
+      color: #475569 !important;
+      background: transparent !important;
+      border-radius: 8px !important;
+      
+      &.p-highlight {
+        background: #4f46e5 !important;
+        color: #ffffff !important;
+      }
+    }
+
+    button {
+      color: #475569 !important;
+      background: transparent !important;
+      border: none !important;
+      
+      &:enabled:hover {
+        background: #f1f5f9 !important;
+      }
+    }
+  }
+
+  /* تنسيق الـ Dropdowns، الـ DatePicker، وحقول الإدخال لتكون بيضاء ونظيفة */
+  .p-select, .p-datepicker, .p-inputtext {
     background: #ffffff !important;
     border: 1px solid #cbd5e1 !important;
-    border-radius: 10px !important;
     color: #0f172a !important;
+    border-radius: 10px !important;
 
     .p-select-label, input {
       color: #0f172a !important;
+      background: #ffffff !important;
+    }
+  }
+
+  /* تنسيق نافذة الـ Dialog (مثل Add Expense) لتكون بيضاء وفخمة بالكامل */
+  .p-dialog {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+
+    .p-dialog-header {
+      background: #ffffff !important;
+      color: #0f172a !important;
+      border-bottom: 1px solid #f1f5f9 !important;
+      padding: 20px 24px !important;
+      font-weight: 700 !important;
+    }
+
+    .p-dialog-content {
+      background: #ffffff !important;
+      color: #1e293b !important;
+      padding: 24px !important;
+    }
+
+    .p-dialog-footer {
+      background: #ffffff !important;
+      border-top: 1px solid #f1f5f9 !important;
+      padding: 16px 24px !important;
     }
   }
 }
