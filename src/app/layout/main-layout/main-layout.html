@@ -1,3 +1,4 @@
+<p-confirmdialog styleClass="logout-confirm-dialog" />
 <div class="app-shell" (click)="closeUserMenu()">
   <div class="mobile-overlay" [class.visible]="menuOpen" (click)="closeMenu()"></div>
   
@@ -30,8 +31,9 @@
       
       <div class="topbar-right">
         <!-- زرار التبديل بين الدارك واللايت مود -->
-        <button class="theme-toggle-btn" type="button" (click)="toggleDarkMode()" [title]="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+        <button class="theme-toggle-btn" type="button" (click)="toggleDarkMode()" [attr.aria-label]="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'" [attr.aria-pressed]="isDarkMode" [title]="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
           <i class="pi" [ngClass]="isDarkMode ? 'pi-sun' : 'pi-moon'"></i>
+          <span>{{ isDarkMode ? 'Light mode' : 'Dark mode' }}</span>
         </button>
 
         <!-- قائمة الحساب وتسجيل الخروج -->

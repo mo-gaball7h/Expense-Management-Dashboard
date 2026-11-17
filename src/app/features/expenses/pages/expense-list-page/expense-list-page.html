@@ -1,7 +1,7 @@
-<p-toast /><p-confirmdialog />
+<p-toast /><p-confirmdialog styleClass="expense-delete-dialog" />
 <section class="page-heading"><div><p class="eyebrow">FINANCE</p><h1>Expenses</h1><p class="muted">Track, search and manage company expenses.</p></div><p-button label="Add expense" icon="pi pi-plus" (onClick)="openAdd()" /></section>
 <section class="panel">
-  <div class="toolbar" aria-label="Expense filters"><label class="search-box"><i class="pi pi-search"></i><input pInputText [(ngModel)]="search" placeholder="Search description or notes…" /></label>
+  <div class="toolbar" aria-label="Expense filters"><label class="search-box"><i class="pi pi-search"></i><input pInputText class="expense-search-input" [(ngModel)]="search" placeholder="Search description or notes…" /></label>
     <p-select class="filter-select" [options]="categories" [(ngModel)]="selectedCategory" optionLabel="label" optionValue="value" placeholder="All categories" />
     <p-select class="filter-select" [options]="payments" [(ngModel)]="selectedPayment" optionLabel="label" optionValue="value" placeholder="All payment methods" />
     <p-datepicker class="filter-date" [(ngModel)]="dateRange" selectionMode="range" [readonlyInput]="true" [showIcon]="true" dateFormat="dd/mm/yy" placeholder="Date range" appendTo="body" />
@@ -16,10 +16,21 @@
 </section>
 
 <app-expense-form-dialog [(visible)]="formVisible" [expense]="selectedExpense" (saved)="onSaved()" />
-<p-dialog header="Expense details" [(visible)]="detailsVisible" [modal]="true" [style]="{width:'min(500px, 94vw)'}">
-  <div class="details-grid" *ngIf="selectedExpense as item">
-    <div><small>Description</small><strong>{{ item.description }}</strong></div><div><small>Amount</small><strong>{{ item.amount | currency:'EGP':'symbol':'1.2-2' }}</strong></div>
-    <div><small>Date</small><strong>{{ item.date | date:'dd MMMM yyyy' }}</strong></div><div><small>Category</small><strong>{{ item.category }}</strong></div>
-    <div><small>Payment method</small><strong>{{ item.paymentMethod }}</strong></div><div class="details-notes"><small>Notes</small><strong>{{ item.notes || 'No notes added' }}</strong></div>
+<p-dialog header="Expense details" styleClass="expense-details-dialog" [(visible)]="detailsVisible" [modal]="true" [draggable]="false" [style]="{width:'min(620px, 94vw)'}">
+  <div class="details-content" *ngIf="selectedExpense as item">
+    <div class="details-summary">
+      <span class="details-icon"><i class="pi pi-receipt"></i></span>
+      <div class="details-overview">
+        <span class="details-eyebrow">EXPENSE RECORD</span>
+        <h2>{{ item.description }}</h2>
+        <span class="category-pill">{{ item.category }}</span>
+      </div>
+      <strong class="details-amount">{{ item.amount | currency:'EGP':'symbol':'1.2-2' }}</strong>
+    </div>
+    <div class="details-grid">
+      <div class="detail-item"><i class="pi pi-calendar"></i><span><small>Date</small><strong>{{ item.date | date:'dd MMMM yyyy' }}</strong></span></div>
+      <div class="detail-item"><i class="pi pi-credit-card"></i><span><small>Payment method</small><strong>{{ item.paymentMethod }}</strong></span></div>
+      <div class="detail-item details-notes"><i class="pi pi-align-left"></i><span><small>Notes</small><strong>{{ item.notes || 'No notes added' }}</strong></span></div>
+    </div>
   </div>
 </p-dialog>

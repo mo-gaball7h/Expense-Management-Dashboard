@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, RouterOutlet],
+  imports: [CommonModule, RouterLink, RouterLinkActive, RouterOutlet, ConfirmDialogModule],
+  providers: [ConfirmationService],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.scss'
 })
@@ -14,17 +17,12 @@ export class MainLayout implements OnInit {
   userMenuOpen = false;
   isDarkMode = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private confirmation: ConfirmationService) {}
 
   ngOnInit(): void {
-    // استرجاع وضع الدارك مود لو كان مفعل قبل كده
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      this.isDarkMode = true;
-      document.body.classList.add('dark-mode');
-    }
+    this.isDarkMode = localStorage.getItem('theme') === 'dark';
+    this.applyTheme();
   }
-
   closeMenu(): void { 
     this.menuOpen = false; 
   }
@@ -40,17 +38,33 @@ export class MainLayout implements OnInit {
 
   toggleDarkMode(): void {
     this.isDarkMode = !this.isDarkMode;
-    if (this.isDarkMode) {
-      document.body.classList.add('dark-mode');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.body.classList.remove('dark-mode');
-      localStorage.setItem('theme', 'light');
-    }
+    this.applyTheme();
   }
 
+  private applyTheme(): void {
+    document.body.classList.toggle('dark-mode', this.isDarkMode);
+    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+  }
   logout(): void {
-    sessionStorage.removeItem('isLoggedIn');
-    this.router.navigate(['/login']);
+    this.userMenuOpen = false;
+    this.confirmation.confirm({
+      header: 'Sign out?',
+      message: 'Are you sure you want to sign out of Spendwise?',
+      icon: 'pi pi-sign-out',
+      acceptLabel: 'Sign out',
+      rejectLabel: 'Stay here',
+      acceptIcon: 'pi pi-sign-out',
+      rejectIcon: 'pi pi-arrow-left',
+      acceptButtonStyleClass: 'p-button-danger',
+      rejectButtonStyleClass: 'p-button-secondary',
+      defaultFocus: 'reject',
+      closeOnEscape: true,
+      dismissableMask: true,
+      accept: () => {
+        sessionStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('isLoggedIn');
+        this.router.navigate(['/login']);
+      }
+    });
   }
 }

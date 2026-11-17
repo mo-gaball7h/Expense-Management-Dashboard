@@ -31,10 +31,10 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   readonly chartOptions: ChartOptions<'bar'> = {
     maintainAspectRatio: false,
-    plugins: { legend: { labels: { color: '#6478b', usePointStyle: true, padding: 18 } } },
+    plugins: { legend: { labels: { color: '#64748b', usePointStyle: true, padding: 18 } } },
     scales: {
-      x: { ticks: { color: '#6478b' }, grid: { display: false } },
-      y: { beginAtZero: true, ticks: { color: '#6478b' }, grid: { color: '#eef2f7' } }
+      x: { ticks: { color: '#64748b' }, grid: { display: false } },
+      y: { beginAtZero: true, ticks: { color: '#64748b' }, grid: { color: '#eef2f7' } }
     }
   };
 

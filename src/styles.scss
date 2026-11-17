@@ -47,7 +47,6 @@ a{color:inherit}
       display: flex !important;
       align-items: center !important;
 
-      /* إجبار النصوص والـ Spans للظهور بوضوح تام ودائم */
       span, div, * {
         color: #263247 !important;
         opacity: 1 !important;
@@ -57,7 +56,6 @@ a{color:inherit}
         background: transparent !important;
       }
 
-      /* حالة الـ Hover */
       &:hover {
         background-color: #f1f5f9 !important;
         
@@ -66,7 +64,6 @@ a{color:inherit}
         }
       }
 
-      /* العنصر المختار (Highlight) */
       &.p-highlight, &[data-p-highlight="true"] {
         background-color: #eef2ff !important;
         
@@ -79,35 +76,408 @@ a{color:inherit}
   }
 }
 
-/* PrimeNG 21 Select option colors */
-.p-select-overlay .p-select-list {
-  padding: 4px !important;
+/* ==========================================================
+   الدارك مود الشامل والقاطع لكل صفحات التطبيق (Dark Mode Global)
+   ================================================---------- */
+body.dark-mode {
+  color-scheme: dark;
+  background: #0b1220 !important;
+  color: #e2e8f0 !important;
 }
 
-.p-select-overlay .p-select-list .p-select-option {
-  min-height: 40px;
-  margin: 2px 0 !important;
-  padding: 10px 12px !important;
-  border-radius: 8px !important;
-  background: #ffffff !important;
-  color: #263247 !important;
-  opacity: 1 !important;
+body.dark-mode .app-shell,
+body.dark-mode .page-content,
+body.dark-mode app-expense-list-page,
+body.dark-mode app-dashboard-page,
+body.dark-mode app-categories-page,
+body.dark-mode app-reports-page,
+body.dark-mode app-settings-page {
+  background: #0b1220 !important;
+  color: #e2e8f0 !important;
 }
 
-.p-select-overlay .p-select-list .p-select-option .p-select-option-label {
-  color: inherit !important;
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  opacity: 1 !important;
+body.dark-mode .sidebar,
+body.dark-mode .topbar,
+body.dark-mode footer,
+body.dark-mode app-expense-list-page .panel,
+body.dark-mode app-dashboard-page .panel,
+body.dark-mode app-dashboard-page .stat-card,
+body.dark-mode app-dashboard-page .today,
+body.dark-mode app-dashboard-page .panel-badge,
+body.dark-mode app-dashboard-page .empty-chart,
+body.dark-mode app-dashboard-page .loading-card,
+body.dark-mode app-categories-page .category-card,
+body.dark-mode app-reports-page .total-card,
+body.dark-mode app-reports-page .chart-card,
+body.dark-mode app-settings-page .settings-card {
+  background: #111c2e !important;
+  border-color: #263449 !important;
+  color: #e2e8f0 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16) !important;
 }
 
-.p-select-overlay .p-select-list .p-select-option:not(.p-disabled):hover {
-  background: #f1f5f9 !important;
+body.dark-mode app-expense-list-page h1,
+body.dark-mode app-expense-list-page .expense-description,
+body.dark-mode app-expense-list-page .amount-cell,
+body.dark-mode app-dashboard-page h1,
+body.dark-mode app-dashboard-page .stat-card strong,
+body.dark-mode app-dashboard-page .panel-heading h2,
+body.dark-mode app-categories-page h1,
+body.dark-mode app-categories-page .category-card strong,
+body.dark-mode app-reports-page h1,
+body.dark-mode app-reports-page h2,
+body.dark-mode app-reports-page h3,
+body.dark-mode app-settings-page h1,
+body.dark-mode app-settings-page h2 {
+  color: #f1f5f9 !important;
+}
+
+body.dark-mode .muted,
+body.dark-mode .notes-preview,
+body.dark-mode .payment-label,
+body.dark-mode .stat-top,
+body.dark-mode .stat-card small,
+body.dark-mode .category-card small,
+body.dark-mode .reports-subtitle,
+body.dark-mode .total-label,
+body.dark-mode .chart-subtitle,
+body.dark-mode .settings-copy p,
+body.dark-mode .breadcrumb-path {
+  color: #94a3b8 !important;
+}
+
+body.dark-mode .category-icon,
+body.dark-mode .settings-icon {
+  background: #252454 !important;
+  color: #a5b4fc !important;
+}
+
+body.dark-mode .category-icon i,
+body.dark-mode .settings-icon i,
+body.dark-mode .stat-icon {
+  color: #a5b4fc !important;
+}
+
+body.dark-mode .category-card .status {
+  background: #123a35 !important;
+  color: #6ee7b7 !important;
+}
+
+body.dark-mode .stat-icon.purple { background: #292554 !important; color: #c4b5fd !important; }
+body.dark-mode .stat-icon.green { background: #123a35 !important; color: #6ee7b7 !important; }
+body.dark-mode .stat-icon.orange { background: #49351a !important; color: #fcd34d !important; }
+body.dark-mode .stat-icon.blue { background: #153754 !important; color: #7dd3fc !important; }
+body.dark-mode .stat-icon.pink { background: #48263a !important; color: #f9a8d4 !important; }
+
+body.dark-mode .settings-copy p,
+body.dark-mode .info-note,
+body.dark-mode .form-intro,
+body.dark-mode .field label {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode .info-note {
+  background: #132b40 !important;
+}
+
+body.dark-mode .login-container { background: #0b1220 !important; }
+body.dark-mode .login-card { background: #111c2e !important; border-color: #263449 !important; }
+body.dark-mode .login-card h2,
+body.dark-mode .login-card p,
+body.dark-mode .login-card label { color: #e2e8f0 !important; }
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode .p-inputtext,
+body.dark-mode .p-select,
+body.dark-mode .p-datepicker,
+body.dark-mode .p-inputnumber-input {
+  background: #0b1220 !important;
+  border-color: #334155 !important;
+  color: #e2e8f0 !important;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder,
+body.dark-mode .p-select-label,
+body.dark-mode .p-select-dropdown,
+body.dark-mode .p-datepicker-input {
+  color: #94a3b8 !important;
+}
+
+body.dark-mode .p-datatable { background: transparent !important; }
+body.dark-mode .p-datatable .p-datatable-thead > tr > th,
+body.dark-mode .p-datatable .p-datatable-tbody > tr,
+body.dark-mode .p-paginator {
+  background: #111c2e !important;
+  border-color: #263449 !important;
+  color: #cbd5e1 !important;
+}
+body.dark-mode .p-datatable .p-datatable-tbody > tr:hover { background: #18263a !important; }
+body.dark-mode .p-datatable .p-datatable-tbody > tr > td { border-color: #263449 !important; color: #cbd5e1 !important; }
+
+body.dark-mode .p-select-overlay,
+body.dark-mode .p-datepicker-panel,
+body.dark-mode .p-dialog,
+body.dark-mode .p-dialog-header,
+body.dark-mode .p-dialog-content,
+body.dark-mode .p-confirm-dialog {
+  background: #111c2e !important;
+  border-color: #334155 !important;
+  color: #e2e8f0 !important;
+}
+body.dark-mode .p-select-overlay .p-select-list .p-select-option { background: #111c2e !important; color: #cbd5e1 !important; }
+body.dark-mode .p-select-overlay .p-select-list .p-select-option:not(.p-disabled):hover { background: #1e293b !important; color: #f8fafc !important; }
+body.dark-mode .p-select-overlay .p-select-list .p-select-option.p-select-option-selected { background: #312e81 !important; color: #c7d2fe !important; }
+body.dark-mode app-expense-list-page .category-pill,
+body.dark-mode app-expense-list-page .filter-status {
+  background: #252454 !important;
+  color: #c7d2fe !important;
+  border-color: #373475 !important;
+}
+
+body.dark-mode app-expense-list-page .row-actions button { color: #94a3b8 !important; }
+body.dark-mode app-expense-list-page .row-actions button:hover { background: #263449 !important; color: #f1f5f9 !important; }
+body.dark-mode app-expense-list-page .row-actions button.delete-action:hover { background: #48212b !important; color: #fda4af !important; }
+body.dark-mode app-expense-list-page .empty-state { color: #94a3b8 !important; }
+body.dark-mode app-expense-list-page .empty-state strong { color: #f1f5f9 !important; }
+
+body.dark-mode .p-button.p-button-secondary,
+body.dark-mode .p-button-secondary {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  color: #cbd5e1 !important;
+}
+body.dark-mode .p-button.p-button-text { color: #cbd5e1 !important; }
+body.dark-mode .p-button.p-button-text:hover { background: #263449 !important; color: #f8fafc !important; }
+body.dark-mode .filter-clear .p-button { color: #cbd5e1 !important; }
+body.dark-mode .filter-clear .p-button:hover { background: #263449 !important; color: #f8fafc !important; }
+
+body.dark-mode .p-datepicker-panel .p-datepicker-header,
+body.dark-mode .p-datepicker-panel .p-datepicker-title,
+body.dark-mode .p-datepicker-panel .p-datepicker-calendar th,
+body.dark-mode .p-datepicker-panel .p-datepicker-calendar td span {
+  background: #111c2e !important;
+  color: #cbd5e1 !important;
+}
+body.dark-mode .p-datepicker-panel .p-datepicker-calendar td span:hover { background: #263449 !important; }
+body.dark-mode .p-datepicker-panel .p-datepicker-calendar td span.p-highlight { background: #4f46e5 !important; color: #ffffff !important; }
+body.dark-mode .p-toast-message { background: #111c2e !important; border-color: #334155 !important; color: #e2e8f0 !important; }
+body.dark-mode .p-toast-message-content { color: #e2e8f0 !important; }
+
+.logout-confirm-dialog {
+  width: min(420px, calc(100vw - 32px));
+  overflow: hidden;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 18px !important;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.22) !important;
+}
+
+.logout-confirm-dialog .p-dialog-header {
+  padding: 24px 24px 8px !important;
+  border: 0 !important;
   color: #0f172a !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
 }
 
-.p-select-overlay .p-select-list .p-select-option.p-select-option-selected {
-  background: #e0e7ff !important;
-  color: #4338ca !important;
-  font-weight: 600 !important;
+.logout-confirm-dialog .p-dialog-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 10px 24px 24px !important;
+}
+
+.logout-confirm-dialog .p-confirmdialog-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  margin: 0;
+  border-radius: 50%;
+  background: #fff1f2;
+  color: #e11d48;
+  font-size: 17px;
+}
+
+.logout-confirm-dialog .p-confirmdialog-message {
+  margin: 7px 0 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.logout-confirm-dialog .p-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 0 24px 22px !important;
+  border: 0 !important;
+}
+
+.logout-confirm-dialog .p-dialog-footer .p-button {
+  min-height: 40px;
+  padding: 0 15px !important;
+  border-radius: 10px !important;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.logout-confirm-dialog .p-dialog-footer .p-button-danger {
+  background: #e5484d !important;
+  border-color: #e5484d !important;
+  color: #ffffff !important;
+}
+
+.logout-confirm-dialog .p-dialog-footer .p-button-danger:hover {
+  background: #d33d43 !important;
+  border-color: #d33d43 !important;
+}
+
+body.dark-mode .logout-confirm-dialog {
+  border-color: #334155 !important;
+  background: #111c2e !important;
+}
+
+body.dark-mode .logout-confirm-dialog .p-dialog-header { color: #f1f5f9 !important; }
+body.dark-mode .logout-confirm-dialog .p-confirmdialog-icon { background: #48212b; color: #fda4af; }
+body.dark-mode .logout-confirm-dialog .p-confirmdialog-message { color: #94a3b8; }
+
+.expense-details-dialog {
+  overflow: hidden;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 18px !important;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.2) !important;
+}
+.expense-details-dialog .p-dialog-header {
+  padding: 22px 24px 14px !important;
+  border-bottom: 1px solid #eef2f7 !important;
+  color: #0f172a !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+}
+.expense-details-dialog .p-dialog-content { padding: 20px 24px 24px !important; }
+
+body.dark-mode .details-summary { background: linear-gradient(135deg, #171d3b, #111c2e) !important; border-color: #30345e !important; }
+body.dark-mode .details-icon { background: #252454 !important; color: #a5b4fc !important; }
+body.dark-mode .details-overview h2,
+body.dark-mode .details-amount { color: #f1f5f9 !important; }
+body.dark-mode .details-eyebrow { color: #a5b4fc !important; }
+body.dark-mode .detail-item { background: #0b1220 !important; border-color: #263449 !important; }
+body.dark-mode .detail-item > i { color: #a5b4fc !important; }
+body.dark-mode .detail-item small { color: #94a3b8 !important; }
+body.dark-mode .detail-item strong { color: #e2e8f0 !important; }
+body.dark-mode .expense-details-dialog { border-color: #334155 !important; }
+body.dark-mode .expense-details-dialog .p-dialog-header { border-color: #263449 !important; color: #f1f5f9 !important; }
+
+.expense-delete-dialog {
+  width: min(440px, calc(100vw - 32px));
+  overflow: hidden;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 18px !important;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.22) !important;
+}
+.expense-delete-dialog .p-dialog-header {
+  padding: 24px 24px 8px !important;
+  border: 0 !important;
+  color: #0f172a !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+}
+.expense-delete-dialog .p-dialog-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 10px 24px 24px !important;
+}
+.expense-delete-dialog .p-confirmdialog-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  margin: 0;
+  border-radius: 50%;
+  background: #fff1f2;
+  color: #e11d48;
+  font-size: 17px;
+}
+.expense-delete-dialog .p-confirmdialog-message {
+  margin: 7px 0 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.expense-delete-dialog .p-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 0 24px 22px !important;
+  border: 0 !important;
+}
+.expense-delete-dialog .p-dialog-footer .p-button {
+  min-height: 40px;
+  padding: 0 15px !important;
+  border-radius: 10px !important;
+  font-size: 13px;
+  font-weight: 600;
+}
+.expense-delete-dialog .p-dialog-footer .p-button-danger {
+  background: #e5484d !important;
+  border-color: #e5484d !important;
+  color: #ffffff !important;
+}
+.expense-delete-dialog .p-dialog-footer .p-button-danger:hover {
+  background: #d33d43 !important;
+  border-color: #d33d43 !important;
+}
+body.dark-mode .expense-delete-dialog { border-color: #334155 !important; background: #111c2e !important; }
+body.dark-mode .expense-delete-dialog .p-dialog-header { color: #f1f5f9 !important; }
+body.dark-mode .expense-delete-dialog .p-confirmdialog-icon { background: #48212b; color: #fda4af; }
+body.dark-mode .expense-delete-dialog .p-confirmdialog-message { color: #94a3b8; }
+
+body.dark-mode .app-shell .main-area .topbar .topbar-right .user-menu-container .user-pill:hover {
+  background: #1e293b !important;
+  border-color: #475569 !important;
+}
+body.dark-mode .app-shell .main-area .topbar .topbar-right .user-menu-container .user-pill:hover .workspace-text {
+  color: #f1f5f9 !important;
+}
+body.dark-mode .app-shell .main-area .topbar .topbar-right .user-menu-container .user-pill:hover .pi-angle-down {
+  color: #cbd5e1 !important;
+}
+
+body.dark-mode app-expense-list-page .toolbar .search-box input,
+body.dark-mode app-expense-list-page .toolbar .search-box .p-inputtext {
+  background: #0b1220 !important;
+  border-color: #334155 !important;
+  color: #e2e8f0 !important;
+}
+body.dark-mode app-expense-list-page .toolbar .search-box input::placeholder {
+  color: #8493a8 !important;
+}
+body.dark-mode app-expense-list-page .toolbar .search-box:focus-within input {
+  border-color: #818cf8 !important;
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.16) !important;
+}
+body.dark-mode app-expense-list-page .toolbar .search-box > i {
+  color: #8493a8 !important;
+}
+
+body.dark-mode app-expense-list-page .toolbar .search-box .expense-search-input {
+  height: 44px !important;
+  background: #0f172a !important;
+  border: 1px solid #334155 !important;
+  border-radius: 10px !important;
+  color: #e2e8f0 !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.18) !important;
+}
+body.dark-mode app-expense-list-page .toolbar .search-box .expense-search-input::placeholder {
+  color: #8493a8 !important;
+}
+body.dark-mode app-expense-list-page .toolbar .search-box:focus-within .expense-search-input {
+  background: #111c2e !important;
+  border-color: #818cf8 !important;
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.16) !important;
 }

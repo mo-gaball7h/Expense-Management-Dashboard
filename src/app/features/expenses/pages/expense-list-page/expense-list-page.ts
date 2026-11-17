@@ -78,13 +78,18 @@ export class ExpenseListPage implements OnInit, OnDestroy {
   
   deleteExpense(expense: Expense): void {
     this.confirmation.confirm({
-      header: 'Delete expense',
-      message: `Delete "${expense.description}"? This action cannot be undone.`,
-      icon: 'pi pi-exclamation-triangle',
+      header: 'Delete this expense?',
+      message: 'This will permanently remove the expense from your records. You can’t undo this action.',
+      icon: 'pi pi-trash',
       acceptLabel: 'Delete',
       rejectLabel: 'Cancel',
+      acceptIcon: 'pi pi-trash',
+      rejectIcon: '',
       acceptButtonStyleClass: 'p-button-danger',
       rejectButtonStyleClass: 'p-button-secondary',
+      defaultFocus: 'reject',
+      closeOnEscape: true,
+      dismissableMask: true,
       accept: () => this.service.deleteExpense(expense.id).subscribe({
         next: () => this.messages.add({ severity: 'success', summary: 'Deleted', detail: 'Expense deleted successfully.' }),
         error: () => this.messages.add({ severity: 'error', summary: 'Error', detail: 'Could not delete the expense.' })
