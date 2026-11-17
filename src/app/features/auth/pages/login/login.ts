@@ -46,7 +46,7 @@ export class LoginComponent {
         this.loading = false;
         this.messageService.add({
           severity: 'success',
-          summary: 'Welcome back',
+          summary: 'Welcome',
           detail: 'Logged in successfully.'
         });
 
