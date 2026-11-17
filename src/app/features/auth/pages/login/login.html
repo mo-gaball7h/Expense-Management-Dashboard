@@ -1,0 +1,53 @@
+<p-toast />
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="brand-badge"><i class="pi pi-wallet"></i></div>
+      <h2>Welcome back</h2>
+      <p>Enter your credentials to access your enterprise dashboard.</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="field-group">
+        <label for="username">Username</label>
+        <div class="input-wrapper">
+          <input 
+            pInputText 
+            id="username" 
+            formControlName="username" 
+            placeholder="Enter your username" 
+          />
+          <i class="pi pi-user"></i>
+        </div>
+        <small class="error-msg" *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.invalid">
+          Please enter a valid username (at least 3 characters).
+        </small>
+      </div>
+
+      <div class="field-group">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+          <input 
+            pInputText 
+            type="password" 
+            id="password" 
+            formControlName="password" 
+            placeholder="••••••••" 
+          />
+          <i class="pi pi-lock"></i>
+        </div>
+        <small class="error-msg" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+          Password must be at least 6 characters.
+        </small>
+      </div>
+
+      <div class="form-actions">
+        <p-button 
+          label="Sign in" 
+          type="submit" 
+          [loading]="loading" 
+        />
+      </div>
+    </form>
+  </div>
+</div>
