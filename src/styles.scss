@@ -15,3 +15,99 @@ a{color:inherit}
 .p-datatable .p-datatable-thead>tr>th{background:#fafbfe;color:#8993a3;font-size:10px;font-weight:700;border-color:#edf0f5;padding:13px 12px;white-space:nowrap}
 .p-datatable .p-datatable-tbody>tr>td{padding:14px 12px;border-color:#f0f2f6}
 .p-paginator{border:0;padding-top:15px;font-size:11px}
+
+/* ==========================================================
+   إصلاح وتثبيت الفلاتر والقوائم المنبثقة (PrimeNG Select & Dropdown)
+   ================================================---------- */
+.p-select-panel, 
+.p-dropdown-panel,
+.p-select-overlay {
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1) !important;
+  padding: 6px !important;
+  z-index: 99999 !important;
+
+  .p-select-items, 
+  .p-dropdown-items {
+    padding: 0 !important;
+
+    .p-select-option,
+    .p-select-item, 
+    .p-dropdown-item {
+      background: #ffffff !important;
+      background-color: #ffffff !important;
+      color: #263247 !important;
+      border-radius: 8px !important;
+      padding: 10px 14px !important;
+      margin-bottom: 2px !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      display: flex !important;
+      align-items: center !important;
+
+      /* إجبار النصوص والـ Spans للظهور بوضوح تام ودائم */
+      span, div, * {
+        color: #263247 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        background: transparent !important;
+      }
+
+      /* حالة الـ Hover */
+      &:hover {
+        background-color: #f1f5f9 !important;
+        
+        span, div, * {
+          color: #0f172a !important;
+        }
+      }
+
+      /* العنصر المختار (Highlight) */
+      &.p-highlight, &[data-p-highlight="true"] {
+        background-color: #eef2ff !important;
+        
+        span, div, * {
+          color: #4f46e5 !important;
+          font-weight: 600 !important;
+        }
+      }
+    }
+  }
+}
+
+/* PrimeNG 21 Select option colors */
+.p-select-overlay .p-select-list {
+  padding: 4px !important;
+}
+
+.p-select-overlay .p-select-list .p-select-option {
+  min-height: 40px;
+  margin: 2px 0 !important;
+  padding: 10px 12px !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  color: #263247 !important;
+  opacity: 1 !important;
+}
+
+.p-select-overlay .p-select-list .p-select-option .p-select-option-label {
+  color: inherit !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  opacity: 1 !important;
+}
+
+.p-select-overlay .p-select-list .p-select-option:not(.p-disabled):hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+.p-select-overlay .p-select-list .p-select-option.p-select-option-selected {
+  background: #e0e7ff !important;
+  color: #4338ca !important;
+  font-weight: 600 !important;
+}

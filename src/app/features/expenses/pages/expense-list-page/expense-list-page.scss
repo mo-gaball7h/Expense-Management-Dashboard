@@ -1,7 +1,8 @@
 :host {
   display: block;
   width: 100%;
-  background-color: #f8fafc;
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
   min-height: 100vh;
   padding: 24px 32px;
   box-sizing: border-box;
@@ -37,8 +38,8 @@
 }
 
 .panel {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
   border-radius: 16px;
   padding: 24px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02);
@@ -47,14 +48,15 @@
 .toolbar {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
-  margin-bottom: 16px;
+  margin: -4px -4px 18px;
+  padding: 4px;
 
   .search-box {
     position: relative;
-    flex: 1;
-    min-width: 240px;
+    flex: 1 1 260px;
+    min-width: min(240px, 100%);
     display: flex;
     align-items: center;
 
@@ -72,6 +74,8 @@
       padding: 10px 14px 10px 38px;
       border-radius: 10px;
       font-size: 14px;
+      height: 44px;
+      transition: border-color 0.2s, box-shadow 0.2s;
 
       &:focus {
         border-color: #4f46e5 !important;
@@ -90,7 +94,22 @@
   margin-bottom: 12px;
 }
 
-/* التعديلات الجذرية لإزالة أي Dark mode وضبط الحواف بالكامل */
+.filter-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border: 1px solid #c7d2fe;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #4338ca;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.filter-status i { font-size: 11px; }
+
+/* القضاء التام على أي مظهر داكن وتثبيت المظهر الفاتح والمنسق لكل الفلاتر والقوائم */
 ::ng-deep {
   .p-datatable {
     background: transparent !important;
@@ -119,7 +138,7 @@
     }
   }
 
-  /* تنسيق الـ Paginator السفلي ليصبح أبيض وفاتح تماماً */
+  /* تنسيق الـ Paginator السفلي */
   .p-paginator {
     background: #ffffff !important;
     border-top: 1px solid #e2e8f0 !important;
@@ -150,7 +169,7 @@
     }
   }
 
-  /* تصحيح القوائم المنسدلة (p-select) لضمان انتظام الحدود والحواف بالكامل */
+  /* الفلاتر والقوائم المنسدلة الأساسية (p-select) */
   .p-select {
     background: #ffffff !important;
     border: 1px solid #cbd5e1 !important;
@@ -159,7 +178,9 @@
     box-shadow: none !important;
     display: flex !important;
     align-items: center !important;
-    padding: 2px 4px !important;
+    padding: 0 4px !important;
+    min-height: 44px !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
 
     &:not(.p-disabled):hover {
       border-color: #94a3b8 !important;
@@ -173,7 +194,8 @@
     .p-select-label {
       color: #0f172a !important;
       background: transparent !important;
-      padding: 8px 12px !important;
+      padding: 10px 10px !important;
+      font-size: 13px !important;
     }
 
     .p-select-dropdown {
@@ -183,25 +205,176 @@
     }
   }
 
-  /* تنسيق الـ DatePicker وحقول الإدخال لتكون بيضاء ونظيفة */
-  .p-datepicker, .p-inputtext {
+  .toolbar .filter-select {
+    flex: 1 1 180px;
+    min-width: 170px;
+    max-width: 230px;
+  }
+
+  .toolbar .filter-date {
+    flex: 1 1 185px;
+    min-width: 175px;
+    max-width: 220px;
+
+    .p-datepicker {
+      width: 100%;
+      min-height: 44px;
+      font-size: 13px !important;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .p-datepicker-input {
+      padding: 10px 12px !important;
+      font-size: 13px !important;
+    }
+  }
+
+  .toolbar .filter-clear .p-button {
+    min-height: 42px;
+    padding: 0 10px !important;
+    border-radius: 9px !important;
+    color: #64748b !important;
+    font-size: 13px;
+    font-weight: 600;
+
+    &:hover {
+      background: #f1f5f9 !important;
+      color: #334155 !important;
+    }
+  }
+
+  /* القوائم المنبثقة لكل الفلاتر وضمان ظهور النصوص بلون داكن واضح وصريح في حالتها العادية */
+  .p-select-panel, 
+  .p-dropdown-panel,
+  .p-select-overlay {
+    background-color: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+    padding: 6px !important;
+
+    .p-select-items, 
+    .p-dropdown-items {
+      padding: 0 !important;
+
+      .p-select-option,
+      .p-select-item, 
+      .p-dropdown-item {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        border-radius: 8px !important;
+        padding: 10px 14px !important;
+        margin-bottom: 2px;
+        opacity: 1 !important;
+        visibility: visible !important;
+
+        /* فرض ظهور النص بلون داكن واضح جداً وصريح بدون الحاجة للـ Hover */
+        span, div, & {
+          color: #1e293b !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          font-size: 14px !important;
+          font-weight: 500 !important;
+        }
+
+        /* حالة الـ Hover بلون رمادي فاتح ونظيف وتثبيت النص الداكن */
+        &:hover {
+          background-color: #f1f5f9 !important;
+          
+          span, div, & {
+            color: #0f172a !important;
+          }
+        }
+
+        /* العنصر المختار (Highlight) بلون بنفسجي متناسق وأنيق */
+        &.p-highlight, &[data-p-highlight="true"] {
+          background-color: #eef2ff !important;
+          
+          span, div, & {
+            color: #4f46e5 !important;
+            font-weight: 600 !important;
+          }
+        }
+      }
+    }
+  }
+
+  /* حقول الإدخال، النوتس، والـ DatePicker */
+  .p-datepicker, .p-inputtext, textarea {
     background: #ffffff !important;
     border: 1px solid #cbd5e1 !important;
     color: #0f172a !important;
     border-radius: 10px !important;
 
-    input {
+    input, textarea {
       color: #0f172a !important;
       background: #ffffff !important;
     }
+
+    &:focus, &:focus-within {
+      border-color: #4f46e5 !important;
+      box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1) !important;
+    }
   }
 
-  /* تنسيق نافذة الـ Dialog لتكون بيضاء وفخمة بالكامل */
+  /* نافذة التقويم المنبثقة (Calendar Overlay) */
+  .p-datepicker-panel {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+    color: #1e293b !important;
+
+    .p-datepicker-header {
+      background: #ffffff !important;
+      color: #1e293b !important;
+      border-bottom: 1px solid #f1f5f9 !important;
+
+      button, span, select, .p-datepicker-title {
+        color: #1e293b !important;
+        background: transparent !important;
+        opacity: 1 !important;
+
+        &:hover {
+          background: #f1f5f9 !important;
+          color: #0f172a !important;
+        }
+      }
+    }
+
+    .p-datepicker-calendar {
+      th {
+        color: #64748b !important;
+        font-weight: 600 !important;
+      }
+
+      td {
+        span {
+          color: #1e293b !important;
+          background: transparent !important;
+          border-radius: 50% !important;
+          opacity: 1 !important;
+
+          &:hover {
+            background: #f1f5f9 !important;
+            color: #0f172a !important;
+          }
+
+          &.p-highlight {
+            background: #4f46e5 !important;
+            color: #ffffff !important;
+          }
+        }
+      }
+    }
+  }
+
+  /* نوافذ الـ Dialog */
   .p-dialog {
     background: #ffffff !important;
     border: 1px solid #e2e8f0 !important;
     border-radius: 16px !important;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
 
     .p-dialog-header {
       background: #ffffff !important;
@@ -224,7 +397,7 @@
     }
   }
 
-  /* تنسيق رسالة تأكيد الحذف وزر Cancel الرمادي */
+  /* نافذة التأكيد */
   .p-confirm-dialog {
     background: #ffffff !important;
     border-radius: 16px !important;
@@ -236,11 +409,9 @@
       border: 1px solid #cbd5e1 !important;
       color: #475569 !important;
       border-radius: 10px !important;
-      box-shadow: none !important;
       
       &:hover {
         background: #e2e8f0 !important;
-        border-color: #94a3b8 !important;
         color: #0f172a !important;
       }
     }
@@ -344,5 +515,22 @@
   p {
     margin: 0 0 16px 0;
     font-size: 13px;
+  }
+}
+
+@media (max-width: 720px) {
+  :host { padding: 20px 16px; }
+
+  .panel { padding: 18px; }
+
+  .toolbar {
+    .search-box,
+    ::ng-deep .filter-select,
+    ::ng-deep .filter-date {
+      flex-basis: 100%;
+      max-width: none;
+    }
+
+    ::ng-deep .filter-clear { margin-left: auto; }
   }
 }
