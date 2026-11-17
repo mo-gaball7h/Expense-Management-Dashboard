@@ -41,6 +41,8 @@ export class LoginComponent {
     // هنا تقدر تحط البيانات اللي تعجبك بمزاجك
     if (username === 'admin' && password === '123456') {
       this.loading = true;
+
+      localStorage.setItem('isLoggedIn', 'true');
       
       setTimeout(() => {
         this.loading = false;

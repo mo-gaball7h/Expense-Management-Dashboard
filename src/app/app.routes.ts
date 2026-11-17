@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { MainLayout } from './layout/main-layout/main-layout';
 import { LoginComponent } from './features/auth/pages/login/login';
+import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
   // 1. أول ما يفتح الموقع خالص، يروح على اللوج ان تلقائياً
@@ -13,6 +14,7 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayout,
+    canActivate: [authGuard],
     children: [
       { path: 'dashboard', loadComponent: () => import('./features/dashboard/pages/dashboard-page/dashboard-page').then(m => m.DashboardPage) },
       { path: 'expenses', loadComponent: () => import('./features/expenses/pages/expense-list-page/expense-list-page').then(m => m.ExpenseListPage) },
