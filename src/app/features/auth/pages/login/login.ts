@@ -42,7 +42,7 @@ export class LoginComponent {
     if (username === 'admin' && password === '123456') {
       this.loading = true;
 
-      localStorage.setItem('isLoggedIn', 'true');
+      sessionStorage.setItem('isLoggedIn', 'true');
       
       setTimeout(() => {
         this.loading = false;
