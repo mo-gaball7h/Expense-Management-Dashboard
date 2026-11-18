@@ -16,16 +16,9 @@ import { DashboardStats, Expense } from '../../../../core/models/expense.model';
 })
 export class DashboardPage implements OnInit, OnDestroy {
   // وضع قيم افتراضية مبدئية لكي تظهر الأرقام والكروت من أول ثانية بدون لودينغ
-  stats: DashboardStats | null = {
-    totalExpenses: 138500,
-    currentMonthExpenses: 85050,
-    previousMonthExpenses: 10250,
-    transactionCount: 12,
-    highestCategory: 'Salaries',
-    highestCategoryAmount: 62000
-  };
+  stats: DashboardStats | null = null;
   
-  loading = false;
+  loading = true;
   error = '';
   monthlyData: ChartData<'bar'> | null = null;
   categoryData: ChartData<'doughnut'> | null = null;

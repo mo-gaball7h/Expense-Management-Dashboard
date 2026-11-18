@@ -33,6 +33,7 @@ export class ExpenseListPage implements OnInit, OnDestroy {
   formVisible = false;
   selectedExpense: Expense | null = null;
   detailsVisible = false;
+  loadError = '';
   private subscription?: Subscription;
   categories = [{ label: 'All categories', value: null }, ...EXPENSE_CATEGORIES.map(value => ({ label: value, value }))];
   payments = [{ label: 'All payment methods', value: null }, ...PAYMENT_METHODS.map(value => ({ label: value, value }))];
@@ -45,13 +46,20 @@ export class ExpenseListPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subscription = this.service.expenses$.subscribe(items => { 
-      this.expenses = [...items].sort((a,b) => b.date.localeCompare(a.date)); 
-      this.loading = false;
-      this.cdr.detectChanges(); // تحديث فوري للشاشة من أول ضغطة
+    this.subscription = this.service.getExpenses().subscribe({
+      next: items => {
+        this.loadError = '';
+        this.expenses = [...items].sort((a, b) => b.date.localeCompare(a.date));
+        this.loading = false;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.loadError = 'Could not load expenses. Please try again.';
+        this.loading = false;
+        this.cdr.detectChanges();
+      }
     });
   }
-
   ngOnDestroy(): void { 
     this.subscription?.unsubscribe(); 
   }

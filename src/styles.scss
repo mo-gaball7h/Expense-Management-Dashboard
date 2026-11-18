@@ -532,3 +532,27 @@ body:not(.dark-mode) .p-select-overlay .p-select-list .p-select-option.p-highlig
   color: #4338ca !important;
   font-weight: 600 !important;
 }
+
+.expense-load-error { display:flex; align-items:center; gap:9px; margin-bottom:14px; padding:12px 15px; border:1px solid #fecdd3; border-radius:10px; background:#fff1f2; color:#be123c; font-size:12px; }
+body.dark-mode app-expense-list-page .expense-load-error { background:#3b1722; border-color:#71303b; color:#fda4af; }
+body.dark-mode app-reports-page .reports-loading,
+body.dark-mode app-reports-page .reports-error { background:#111c2e; border-color:#263449; color:#cbd5e1; }
+body.dark-mode app-reports-page .reports-error { background:#3b1722; border-color:#71303b; color:#fda4af; }
+
+/* Keep expense table sort controls legible in the light theme. */
+body:not(.dark-mode) app-expense-list-page .p-datatable .p-datatable-thead > tr > th.p-datatable-sortable-column {
+  color: #475569 !important;
+}
+body:not(.dark-mode) app-expense-list-page .p-datatable .p-datatable-thead > tr > th.p-datatable-sortable-column .p-datatable-sort-icon {
+  color: #64748b !important;
+  opacity: 0.9 !important;
+}
+body:not(.dark-mode) app-expense-list-page .p-datatable .p-datatable-thead > tr > th.p-datatable-sortable-column:hover {
+  background: #eef2ff !important;
+  color: #3730a3 !important;
+}
+body:not(.dark-mode) app-expense-list-page .p-datatable .p-datatable-thead > tr > th.p-datatable-sortable-column:hover .p-datatable-sort-icon,
+body:not(.dark-mode) app-expense-list-page .p-datatable .p-datatable-thead > tr > th.p-datatable-column-sorted .p-datatable-sort-icon {
+  color: #4338ca !important;
+  opacity: 1 !important;
+}

@@ -15,13 +15,15 @@
   </div>
 
   <!-- Total Recorded Spending Card -->
-  <div class="total-card">
+  <div class="reports-error" *ngIf="error" role="alert"><i class="pi pi-exclamation-circle"></i> {{ error }}</div>
+  <div class="reports-loading" *ngIf="loading" role="status"><i class="pi pi-spin pi-spinner"></i> Loading report data…</div>
+  <div class="total-card" *ngIf="!loading && !error">
     <span class="total-label">Total recorded spending</span>
     <h2 class="total-amount">{{ total | currency:'EGP':'symbol':'1.0-0' }}</h2>
   </div>
 
   <!-- Charts Grid Section -->
-  <div class="charts-grid">
+  <div class="charts-grid" *ngIf="!loading && !error">
     
     <!-- Monthly Expenses Card -->
     <div class="chart-card">

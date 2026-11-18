@@ -1,11 +1,13 @@
+﻿import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
+import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
+import { finalize } from 'rxjs';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,12 +15,12 @@ import { ToastModule } from 'primeng/toast';
   imports: [CommonModule, ReactiveFormsModule, InputTextModule, ButtonModule, ToastModule, RouterLink],
   providers: [MessageService],
   templateUrl: './login.html',
-  styleUrls: ['./login.scss']
+  styleUrl: './login.scss'
 })
 export class LoginComponent {
   loginForm: FormGroup;
   recoveryForm: FormGroup;
-  loading: boolean = false;
+  loading = false;
   showPassword = false;
   showForgotPassword = false;
   recoveryNotice = false;
@@ -27,7 +29,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
@@ -58,52 +61,44 @@ export class LoginComponent {
   }
 
   onRecoverySubmit(): void {
-    if (this.recoveryForm.invalid) {
+    if (this.recoveryForm.invalid || this.loading) {
       this.recoveryForm.markAllAsTouched();
       return;
     }
 
-    this.recoveryNotice = true;
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Demo mode',
-      detail: 'Password recovery is not connected to an email service yet.'
+    this.loading = true;
+    this.authService.requestPasswordRecovery(this.recoveryForm.controls['email'].value ?? '').pipe(
+      finalize(() => this.loading = false)
+    ).subscribe({
+      next: response => {
+        this.recoveryNotice = true;
+        this.messageService.add({ severity: 'info', summary: 'Recovery unavailable', detail: response.message });
+      },
+      error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Could not process the recovery request.' })
     });
   }
 
   onSubmit(): void {
-    if (this.loginForm.invalid) {
+    if (this.loginForm.invalid || this.loading) {
       this.loginForm.markAllAsTouched();
       return;
     }
 
-    const { username, password } = this.loginForm.value;
-
-    // هنا تقدر تحط البيانات اللي تعجبك بمزاجك
-    if (username === 'admin' && password === '123456') {
-      this.loading = true;
-
-      sessionStorage.setItem('isLoggedIn', 'true');
-      
-      setTimeout(() => {
-        this.loading = false;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Welcome',
-          detail: 'Logged in successfully.'
-        });
-
-        setTimeout(() => {
-          this.router.navigate(['/dashboard']);
-        }, 800);
-      }, 1000);
-    } else {
-      // لو اليوزر أو الباسورد غلط
-      this.messageService.add({
+    const { username, password } = this.loginForm.getRawValue();
+    this.loading = true;
+    this.authService.signIn(username ?? '', password ?? '').pipe(
+      finalize(() => this.loading = false)
+    ).subscribe({
+      next: () => {
+        sessionStorage.setItem('isLoggedIn', 'true');
+        this.messageService.add({ severity: 'success', summary: 'Welcome', detail: 'Logged in successfully.' });
+        this.router.navigate(['/dashboard']);
+      },
+      error: error => this.messageService.add({
         severity: 'error',
-        summary: 'Login Failed',
-        detail: 'Invalid username or password.'
-      });
-    }
+        summary: 'Login failed',
+        detail: error?.message || 'Invalid username or password.'
+      })
+    });
   }
 }

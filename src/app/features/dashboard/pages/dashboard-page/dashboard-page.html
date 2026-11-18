@@ -3,10 +3,11 @@
   <span class="today">Company finances</span>
 </section>
 
-<div class="error-banner" *ngIf="error">{{ error }}</div>
+<div class="error-banner" *ngIf="error" role="alert">{{ error }}</div>
+<div class="dashboard-loading" *ngIf="loading" role="status"><i class="pi pi-spin pi-spinner"></i><span>Loading your expense overview…</span></div>
 
 <!-- عرض الكروت فوراً باستخدام البيانات المتاحة -->
-<div class="stat-grid" *ngIf="stats as s">
+<div class="stat-grid" *ngIf="!loading && stats as s">
   <article class="stat-card"><div class="stat-top"><span>Total expenses</span><span class="stat-icon purple">↗</span></div><strong>{{ s.totalExpenses | currency:'EGP':'symbol':'1.0-0' }}</strong><small>Across all recorded transactions</small></article>
   <article class="stat-card"><div class="stat-top"><span>This month</span><span class="stat-icon green">▦</span></div><strong>{{ s.currentMonthExpenses | currency:'EGP':'symbol':'1.0-0' }}</strong><small>Expenses in the current month</small></article>
   <article class="stat-card"><div class="stat-top"><span>Last month</span><span class="stat-icon orange">◷</span></div><strong>{{ s.previousMonthExpenses | currency:'EGP':'symbol':'1.0-0' }}</strong><small>Expenses in the previous month</small></article>
@@ -15,7 +16,7 @@
 </div>
 
 <!-- عرض الرسوم البيانية فوراً بدون شروط معقدة تخفيها -->
-<div class="chart-grid">
+<div class="chart-grid" *ngIf="!loading && !error">
   <article class="panel">
     <div class="panel-heading"><div><h2>Monthly expenses</h2><p>Spending trend over the last six months</p></div><span class="panel-badge">Last 6 months</span></div>
     <div class="chart-wrap">
@@ -30,7 +31,7 @@
   </article>
 </div>
 
-<section class="panel recent-panel">
+<section class="panel recent-panel" *ngIf="!loading && !error">
   <div class="panel-heading recent-heading">
     <div><h2>Recent expenses</h2><p>Your latest recorded transactions</p></div>
     <a routerLink="/expenses" class="view-all-link">View all expenses <i class="pi pi-arrow-right"></i></a>

@@ -119,3 +119,22 @@
     justify-content: center;
   }
 }
+
+.reports-loading,
+.reports-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.reports-error {
+  border-color: #fecdd3;
+  background: #fff1f2;
+  color: #be123c;
+}

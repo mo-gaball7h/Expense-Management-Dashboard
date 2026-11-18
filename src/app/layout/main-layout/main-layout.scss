@@ -351,3 +351,72 @@
     }
   }
 }
+
+.mobile-overlay { display: none; }
+
+@media (max-width: 900px) {
+  .app-shell { width: 100%; }
+  .app-shell .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(290px, 84vw);
+    height: 100dvh;
+    transform: translateX(-105%);
+    box-shadow: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .app-shell .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 18px 0 45px rgba(15, 23, 42, 0.18);
+  }
+  .mobile-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: block;
+    background: rgba(15, 23, 42, 0.48);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .mobile-overlay.visible { opacity: 1; pointer-events: auto; }
+  .app-shell .main-area { width: 100%; min-width: 0; }
+  .app-shell .main-area .topbar { gap: 14px; padding: 0 18px; }
+  .app-shell .main-area .topbar .menu-toggle {
+    display: inline-grid;
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: #ffffff;
+  }
+  .app-shell .main-area .topbar .breadcrumb { flex: 1; min-width: 0; overflow: hidden; font-size: 12px; white-space: nowrap; }
+  .app-shell .main-area .topbar .topbar-right { gap: 9px; }
+  .app-shell .main-area .page-content { padding: 20px; }
+}
+
+@media (max-width: 600px) {
+  .app-shell .main-area .topbar { height: 62px; padding: 0 12px; }
+  .app-shell .main-area .topbar .breadcrumb { display: none; }
+  .app-shell .main-area .topbar .topbar-right { margin-left: auto; }
+  .app-shell .main-area .topbar .theme-toggle-btn { min-height: 36px; padding: 0 9px; }
+  .app-shell .main-area .topbar .theme-toggle-btn span,
+  .app-shell .main-area .topbar .user-pill .workspace-text,
+  .app-shell .main-area .topbar .user-pill > .status-dot,
+  .app-shell .main-area .topbar .user-pill > .pi-angle-down { display: none; }
+  .app-shell .main-area .topbar .user-pill { padding: 4px; border-radius: 999px; }
+  .app-shell .main-area .page-content { padding: 14px; }
+  .app-shell .main-area footer { flex-wrap: wrap; gap: 5px; padding: 10px 14px; font-size: 10px; }
+  .app-shell .main-area footer .footer-right { width: 100%; margin-left: 0; }
+}
+
+@media (min-width: 601px) and (max-width: 700px) {
+  .app-shell .main-area .topbar .breadcrumb { display: none; }
+  .app-shell .main-area .topbar .topbar-right { margin-left: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-shell *, .mobile-overlay { transition-duration: 0.01ms !important; }
+}

@@ -93,6 +93,19 @@ export class ExpenseService {
     }), delay(180));
   }
 
+  getCategorySummary(): Observable<Record<string, { count: number; total: number }>> {
+    return this.expenses$.pipe(map(items => {
+      const summary: Record<string, { count: number; total: number }> = {};
+      EXPENSE_CATEGORIES.forEach(category => summary[category] = { count: 0, total: 0 });
+      items.forEach(expense => {
+        const category = summary[expense.category];
+        category.count += 1;
+        category.total += expense.amount;
+      });
+      return summary;
+    }));
+  }
+
   resetDemoData(): void {
     const data = this.makeDemoData();
     this.save(data);

@@ -20,16 +20,7 @@ export class CategoriesPage implements OnInit, OnDestroy {
   constructor(private service: ExpenseService) {}
 
   ngOnInit(): void {
-    this.subscription = this.service.expenses$.subscribe(expenses => {
-      const stats: Record<string, { count: number; total: number }> = {};
-      this.categories.forEach(category => stats[category] = { count: 0, total: 0 });
-      expenses.forEach(expense => {
-        const stat = stats[expense.category];
-        stat.count += 1;
-        stat.total += expense.amount;
-      });
-      this.categoryStats = stats;
-    });
+    this.subscription = this.service.getCategorySummary().subscribe(stats => this.categoryStats = stats);
   }
 
   ngOnDestroy(): void {

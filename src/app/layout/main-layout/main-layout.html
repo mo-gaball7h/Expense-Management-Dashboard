@@ -26,7 +26,7 @@
   <!-- المنطقة الرئيسية والهيدر العلوي -->
   <main class="main-area">
     <header class="topbar">
-      <button class="menu-toggle" type="button" (click)="menuOpen = !menuOpen"><i class="pi pi-bars"></i></button>
+      <button class="menu-toggle" type="button" (click)="menuOpen = !menuOpen" aria-label="Toggle navigation" [attr.aria-expanded]="menuOpen"><i class="pi" [ngClass]="menuOpen ? 'pi-times' : 'pi-bars'"></i></button>
       <div class="breadcrumb">Workspace <i class="pi pi-angle-right"></i> <strong>Expense management</strong></div>
       
       <div class="topbar-right">
