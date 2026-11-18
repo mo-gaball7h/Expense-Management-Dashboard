@@ -481,3 +481,54 @@ body.dark-mode app-expense-list-page .toolbar .search-box:focus-within .expense-
   border-color: #818cf8 !important;
   box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.16) !important;
 }
+
+body.dark-mode app-dashboard-page .recent-expense { border-color: #263449 !important; }
+body.dark-mode app-dashboard-page .recent-expense-icon { background: #252454 !important; color: #a5b4fc !important; }
+body.dark-mode app-dashboard-page .recent-expense-copy strong,
+body.dark-mode app-dashboard-page .recent-amount { color: #e2e8f0 !important; }
+body.dark-mode app-dashboard-page .recent-expense-copy small,
+body.dark-mode app-dashboard-page .recent-payment,
+body.dark-mode app-dashboard-page .recent-empty { color: #94a3b8 !important; }
+body.dark-mode app-dashboard-page .view-all-link { color: #a5b4fc !important; }
+body.dark-mode app-dashboard-page .view-all-link:hover { color: #c7d2fe !important; }
+body.dark-mode app-categories-page .category-card small { color: #94a3b8 !important; }
+body.dark-mode app-categories-page .category-card small span { color: #64748b !important; }
+
+/* PrimeNG 21 select: readable light-mode options */
+body:not(.dark-mode) .p-select-overlay {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12) !important;
+}
+body:not(.dark-mode) .p-select-overlay .p-select-list { padding: 5px !important; }
+body:not(.dark-mode) .p-select-overlay .p-select-list .p-select-option {
+  min-height: 40px;
+  margin: 2px 0 !important;
+  padding: 10px 12px !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  color: #334155 !important;
+  opacity: 1 !important;
+}
+body:not(.dark-mode) .p-select-overlay .p-select-list .p-select-option .p-select-option-label {
+  color: inherit !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  opacity: 1 !important;
+}
+body:not(.dark-mode) .p-select-overlay .p-select-list .p-select-option:not(.p-disabled):hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+body:not(.dark-mode) .p-select-overlay .p-select-list .p-select-option.p-select-option-selected,
+body:not(.dark-mode) .p-select-overlay .p-select-list .p-select-option.p-highlight {
+  background: #eef2ff !important;
+  color: #4338ca !important;
+  font-weight: 600 !important;
+}
+body:not(.dark-mode) .p-select-overlay .p-select-list .p-select-option.p-select-option-selected .p-select-option-label,
+body:not(.dark-mode) .p-select-overlay .p-select-list .p-select-option.p-highlight .p-select-option-label {
+  color: #4338ca !important;
+  font-weight: 600 !important;
+}

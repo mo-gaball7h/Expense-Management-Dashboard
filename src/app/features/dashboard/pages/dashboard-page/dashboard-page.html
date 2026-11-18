@@ -29,3 +29,19 @@
     </div>
   </article>
 </div>
+
+<section class="panel recent-panel">
+  <div class="panel-heading recent-heading">
+    <div><h2>Recent expenses</h2><p>Your latest recorded transactions</p></div>
+    <a routerLink="/expenses" class="view-all-link">View all expenses <i class="pi pi-arrow-right"></i></a>
+  </div>
+  <div class="recent-list" *ngIf="recentExpenses.length; else noRecentExpenses">
+    <article class="recent-expense" *ngFor="let expense of recentExpenses">
+      <span class="recent-expense-icon"><i class="pi pi-receipt"></i></span>
+      <div class="recent-expense-copy"><strong>{{ expense.description }}</strong><small>{{ expense.category }} <span>·</span> {{ expense.date | date:'dd MMM yyyy' }}</small></div>
+      <span class="recent-payment">{{ expense.paymentMethod }}</span>
+      <strong class="recent-amount">{{ expense.amount | currency:'EGP':'symbol':'1.2-2' }}</strong>
+    </article>
+  </div>
+  <ng-template #noRecentExpenses><p class="recent-empty">No expenses have been recorded yet.</p></ng-template>
+</section>

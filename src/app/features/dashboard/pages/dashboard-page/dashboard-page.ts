@@ -1,15 +1,16 @@
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { ChartData, ChartOptions } from 'chart.js';
 import { combineLatest, Subscription } from 'rxjs';
 import { ChartModule } from 'primeng/chart';
 import { ExpenseService } from '../../../../core/services/expense.service';
-import { DashboardStats } from '../../../../core/models/expense.model';
+import { DashboardStats, Expense } from '../../../../core/models/expense.model';
 
 @Component({
   selector: 'app-dashboard-page',
   standalone: true,
-  imports: [CommonModule, CurrencyPipe, ChartModule],
+  imports: [CommonModule, CurrencyPipe, DatePipe, ChartModule, RouterLink],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.scss'
 })
@@ -28,6 +29,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   error = '';
   monthlyData: ChartData<'bar'> | null = null;
   categoryData: ChartData<'doughnut'> | null = null;
+  recentExpenses: Expense[] = [];
 
   readonly chartOptions: ChartOptions<'bar'> = {
     maintainAspectRatio: false,
@@ -55,11 +57,13 @@ export class DashboardPage implements OnInit, OnDestroy {
     this.subscription = combineLatest({
       stats: this.expenseService.getDashboardStats(),
       monthly: this.expenseService.getMonthlyChartData(),
-      categories: this.expenseService.getCategoryChartData()
+      categories: this.expenseService.getCategoryChartData(),
+      expenses: this.expenseService.getExpenses()
     }).subscribe({
       next: result => {
         this.error = '';
         this.stats = result.stats;
+        this.recentExpenses = result.expenses.slice(0, 5);
         this.monthlyData = { 
           labels: result.monthly.labels, 
           datasets: [{ label: 'Expenses', data: result.monthly.values, backgroundColor: '#6478f5', borderRadius: 7 }] 
