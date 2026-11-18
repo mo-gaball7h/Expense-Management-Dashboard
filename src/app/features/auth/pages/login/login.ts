@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
@@ -10,14 +10,19 @@ import { ToastModule } from 'primeng/toast';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, InputTextModule, ButtonModule, ToastModule],
+  imports: [CommonModule, ReactiveFormsModule, InputTextModule, ButtonModule, ToastModule, RouterLink],
   providers: [MessageService],
   templateUrl: './login.html',
   styleUrls: ['./login.scss']
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  recoveryForm: FormGroup;
   loading: boolean = false;
+  showPassword = false;
+  showForgotPassword = false;
+  recoveryNotice = false;
+  isDarkMode = false;
 
   constructor(
     private fb: FormBuilder,
@@ -27,6 +32,42 @@ export class LoginComponent {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+    this.recoveryForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]]
+    });
+    this.isDarkMode = localStorage.getItem('theme') === 'dark';
+    document.body.classList.toggle('dark-mode', this.isDarkMode);
+  }
+
+  toggleTheme(): void {
+    this.isDarkMode = !this.isDarkMode;
+    document.body.classList.toggle('dark-mode', this.isDarkMode);
+    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+  }
+
+  openForgotPassword(): void {
+    this.showForgotPassword = true;
+    this.recoveryNotice = false;
+  }
+
+  backToLogin(): void {
+    this.showForgotPassword = false;
+    this.recoveryNotice = false;
+    this.recoveryForm.reset();
+  }
+
+  onRecoverySubmit(): void {
+    if (this.recoveryForm.invalid) {
+      this.recoveryForm.markAllAsTouched();
+      return;
+    }
+
+    this.recoveryNotice = true;
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Demo mode',
+      detail: 'Password recovery is not connected to an email service yet.'
     });
   }
 
