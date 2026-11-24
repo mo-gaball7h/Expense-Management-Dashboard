@@ -1,0 +1,32 @@
+<section class="page-heading">
+  <div><p class="eyebrow">ACCESS CONTROL</p><h1>Roles &amp; Permissions</h1><p class="muted">Understand what each workspace role can view and change.</p></div>
+  <span class="policy-badge"><i class="pi pi-shield"></i> Role-based access</span>
+</section>
+
+<section class="role-cards" aria-label="Workspace roles">
+  <article class="role-card" *ngFor="let role of roles" [attr.data-role]="role.key">
+    <div class="role-card-top"><span class="role-symbol"><i class="pi" [ngClass]="role.key === 'admin' ? 'pi-shield' : role.key === 'manager' ? 'pi-briefcase' : role.key === 'accountant' ? 'pi-calculator' : 'pi-eye'"></i></span><span class="role-count">{{ usersInRole(role) }} user{{ usersInRole(role) === 1 ? '' : 's' }}</span></div>
+    <h2>{{ role.label }}</h2><p>{{ role.description }}</p>
+    <div class="role-card-footer"><span><i class="pi pi-check-circle"></i> {{ role.permissions.length }} permissions</span><span class="role-key">{{ role.key }}</span></div>
+  </article>
+</section>
+
+<section class="panel permissions-panel">
+  <div class="permissions-heading"><div><h2>Permission matrix</h2><p>A check means the role has that permission in this demo.</p></div><div class="matrix-legend"><span class="legend-allowed"><i class="pi pi-check"></i> Allowed</span><span class="legend-denied"><i class="pi pi-minus"></i> Not assigned</span></div></div>
+  <div class="permission-table-wrap">
+    <table class="permission-table">
+      <thead><tr><th class="permission-name-heading">Permission</th><th *ngFor="let role of roles">{{ role.label }}</th></tr></thead>
+      <tbody>
+        <ng-container *ngFor="let group of permissionGroups">
+          <tr class="permission-group-row"><th [attr.colspan]="roles.length + 1">{{ group.name }}</th></tr>
+          <tr *ngFor="let permission of group.permissions">
+            <td><strong>{{ permission.label }}</strong><small>{{ permission.description }}</small></td>
+            <td *ngFor="let role of roles" class="permission-cell"><span class="permission-check" [class.allowed]="roleHas(role, permission.key)" [attr.aria-label]="roleHas(role, permission.key) ? 'Allowed' : 'Not assigned'"><i class="pi" [ngClass]="roleHas(role, permission.key) ? 'pi-check' : 'pi-minus'"></i></span></td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<aside class="demo-security-note"><i class="pi pi-info-circle"></i><span>These roles are mock data for this frontend demo. A real application must also enforce permissions in its backend API.</span></aside>

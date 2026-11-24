@@ -1,0 +1,48 @@
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">ACCESS CONTROL</p>
+    <h1>Users</h1>
+    <p class="muted">Review workspace accounts and the access assigned to each person.</p>
+  </div>
+  <span class="demo-data-badge"><i class="pi pi-database"></i> Demo directory</span>
+</section>
+
+<section class="user-summary" aria-label="User summary">
+  <article class="user-summary-card"><span class="summary-icon users-icon"><i class="pi pi-users"></i></span><div><small>Total accounts</small><strong>{{ users.length }}</strong></div></article>
+  <article class="user-summary-card"><span class="summary-icon roles-icon"><i class="pi pi-shield"></i></span><div><small>Roles in use</small><strong>{{ roleCount }}</strong></div></article>
+  <article class="user-summary-card"><span class="summary-icon active-icon"><i class="pi pi-check-circle"></i></span><div><small>Active accounts</small><strong>{{ users.length }}</strong></div></article>
+</section>
+
+<section class="panel user-directory-panel">
+  <div class="directory-toolbar">
+    <div><h2>Workspace directory</h2><p>Demo accounts used to try each permission level.</p></div>
+    <div class="directory-filters">
+      <label class="user-search"><i class="pi pi-search"></i><input [(ngModel)]="search" type="search" placeholder="Search users" aria-label="Search users" /></label>
+      <select [(ngModel)]="selectedRole" aria-label="Filter by role">
+        <option value="">All roles</option>
+        <option value="admin">Administrator</option>
+        <option value="manager">Finance Manager</option>
+        <option value="accountant">Accountant</option>
+        <option value="viewer">Read-only Viewer</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="directory-loading" *ngIf="loading"><i class="pi pi-spin pi-spinner"></i> Loading users…</div>
+  <div class="directory-error" *ngIf="!loading && loadError" role="alert"><i class="pi pi-exclamation-circle"></i><span>{{ loadError }}</span><button type="button" (click)="loadUsers()">Try again</button></div>
+  <div class="users-table-wrap" *ngIf="!loading && !loadError && filteredUsers.length">
+    <table class="users-table">
+      <thead><tr><th>User</th><th>Department</th><th>Role</th><th>Last active</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr *ngFor="let user of filteredUsers">
+          <td><div class="user-identity"><span class="user-avatar" [attr.data-role]="user.role">{{ initials(user.name) }}</span><span class="user-name"><strong>{{ user.name }}</strong><small>{{ user.email }} <span class="username-label">· {{ user.username }}</span></small></span><span class="you-badge" *ngIf="user.id === currentUserId">You</span></div></td>
+          <td>{{ user.department }}</td>
+          <td><span class="role-badge" [attr.data-role]="user.role">{{ roleLabels[user.role] }}</span></td>
+          <td>{{ user.lastActive }}</td>
+          <td><span class="account-status"><span></span> Active</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="directory-empty" *ngIf="!loading && !loadError && !filteredUsers.length"><i class="pi pi-user-minus"></i><strong>No users match your search</strong><span>Try another name, email or role.</span></div>
+</section>

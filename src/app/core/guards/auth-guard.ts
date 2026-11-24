@@ -1,17 +1,9 @@
 import { inject } from '@angular/core';
-import { Router, CanActivateFn } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
-export const authGuard: CanActivateFn = (route, state) => {
+export const authGuard: CanActivateFn = () => {
   const router = inject(Router);
-  
-  // بنتاكد هل اليوزر مسجل دخول في الجلسة الحالية دي بس
-  const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
-
-  if (isLoggedIn) {
-    return true; // مسموح له بالدخول
-  } else {
-    // لو مش مسجل دخول، طرده فوراً على الـ login
-    router.navigate(['/login']);
-    return false;
-  }
+  const auth = inject(AuthService);
+  return auth.isAuthenticated ? true : router.createUrlTree(['/login']);
 };
