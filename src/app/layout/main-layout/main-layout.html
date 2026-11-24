@@ -1,4 +1,4 @@
-<p-confirmdialog styleClass="logout-confirm-dialog" />
+<p-confirmdialog styleClass="logout-confirm-dialog" [draggable]="false" [dismissableMask]="false" [closeOnEscape]="false" />
 <div class="app-shell" (click)="closeUserMenu()">
   <div class="mobile-overlay" [class.visible]="menuOpen" (click)="closeMenu()"></div>
   
@@ -11,15 +11,26 @@
     
     <p class="nav-label">WORKSPACE</p>
     <nav>
-      <a routerLink="/dashboard" routerLinkActive="active" (click)="closeMenu()"><i class="pi pi-th-large"></i><span>Dashboard</span></a>
-      <a routerLink="/expenses" routerLinkActive="active" (click)="closeMenu()"><i class="pi pi-receipt"></i><span>Expenses</span></a>
-      <a routerLink="/categories" routerLinkActive="active" (click)="closeMenu()"><i class="pi pi-tags"></i><span>Categories</span></a>
-      <a routerLink="/reports" routerLinkActive="active" (click)="closeMenu()"><i class="pi pi-chart-bar"></i><span>Reports</span></a>
+      <a *ngIf="permissions.has('dashboard.view')" routerLink="/dashboard" routerLinkActive="active" (click)="closeMenu()"><i class="pi pi-th-large"></i><span>Dashboard</span></a>
+      <a *ngIf="permissions.has('expenses.view')" routerLink="/expenses" routerLinkActive="active" (click)="closeMenu()"><i class="pi pi-receipt"></i><span>Expenses</span></a>
+      <a *ngIf="permissions.has('categories.view')" routerLink="/categories" routerLinkActive="active" (click)="closeMenu()"><i class="pi pi-tags"></i><span>Categories</span></a>
+      <a *ngIf="permissions.has('reports.view')" routerLink="/reports" routerLinkActive="active" (click)="closeMenu()"><i class="pi pi-chart-bar"></i><span>Reports</span></a>
     </nav>
     
-    <p class="nav-label secondary-label">PREFERENCES</p>
+    <p class="nav-label secondary-label" *ngIf="permissions.has('settings.view')">PREFERENCES</p>
     <nav>
-      <a routerLink="/settings" routerLinkActive="active" (click)="closeMenu()"><i class="pi pi-cog"></i><span>Settings</span></a>
+      <a *ngIf="permissions.has('settings.view')" routerLink="/settings" routerLinkActive="active" (click)="closeMenu()"><i class="pi pi-cog"></i><span>Settings</span></a>
+    </nav>
+
+    <p class="nav-label access-label" *ngIf="permissions.hasAny(['users.view', 'roles.view'])">ACCESS CONTROL</p>
+    <nav *ngIf="permissions.hasAny(['users.view', 'roles.view'])">
+      <button class="nav-group-toggle" type="button" (click)="accessMenuOpen = !accessMenuOpen" [attr.aria-expanded]="accessMenuOpen">
+        <i class="pi pi-shield"></i><span>Administration</span><i class="pi submenu-chevron" [ngClass]="accessMenuOpen ? 'pi-angle-up' : 'pi-angle-down'"></i>
+      </button>
+      <div class="access-subnav" *ngIf="accessMenuOpen">
+        <a *ngIf="permissions.has('users.view')" routerLink="/users" routerLinkActive="active" (click)="closeMenu()"><i class="pi pi-users"></i><span>Users</span></a>
+        <a *ngIf="permissions.has('roles.view')" routerLink="/roles-permissions" routerLinkActive="active" (click)="closeMenu()"><i class="pi pi-key"></i><span>Roles &amp; permissions</span></a>
+      </div>
     </nav>
   </aside>
 
@@ -41,15 +52,15 @@
           <div class="user-pill" (click)="toggleUserMenu($event)">
             <span class="status-dot"></span>
             <span class="workspace-text">Local workspace</span>
-            <span class="top-avatar">FM</span>
+            <span class="top-avatar">{{ avatarInitials }}</span>
             <i class="pi pi-angle-down"></i>
           </div>
 
           <!-- القائمة المنسدلة للبروفाइल وتسجيل الخروج -->
           <div class="user-dropdown" *ngIf="userMenuOpen" (click)="$event.stopPropagation()">
             <div class="dropdown-header">
-              <strong>Finance Manager</strong>
-              <small>admin@spendwise.com</small>
+              <strong>{{ currentUser?.name }}</strong>
+              <small>{{ currentUser?.email }} · {{ roleLabel }}</small>
             </div>
             <div class="dropdown-divider"></div>
             <button class="dropdown-item logout-item" type="button" (click)="logout()">

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
@@ -26,6 +26,17 @@ export class ExpenseFormDialog implements OnChanges {
   @Output() saved = new EventEmitter<void>();
   categories = EXPENSE_CATEGORIES.map(value => ({ label: value, value }));
   paymentMethods = PAYMENT_METHODS.map(value => ({ label: value, value }));
+  readonly today = (() => {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    return date;
+  })();
+  readonly datePickerPanelStyles = {
+    '--p-datepicker-select-month-hover-background': '#1e293b',
+    '--p-datepicker-select-year-hover-background': '#1e293b',
+    '--p-datepicker-select-month-hover-color': '#f8fafc',
+    '--p-datepicker-select-year-hover-color': '#f8fafc'
+  };
   saving = false;
   error = '';
   private readonly fb = inject(FormBuilder);
@@ -35,7 +46,12 @@ export class ExpenseFormDialog implements OnChanges {
     description: ['', [Validators.required, Validators.maxLength(120)]],
     amount: [null as number | null, [Validators.required, Validators.min(0.01)]],
     category: [null as string | null, Validators.required],
-    date: [new Date() as Date | null, Validators.required],
+    date: [new Date() as Date | null, [Validators.required, (control: AbstractControl) => {
+      const selected = control.value as Date | null;
+      if (this.expense || !selected) return null;
+      const selectedDay = new Date(selected.getFullYear(), selected.getMonth(), selected.getDate());
+      return selectedDay < this.today ? { pastDate: true } : null;
+    }]],
     paymentMethod: [null as string | null, Validators.required],
     notes: ['', Validators.maxLength(1000)]
   });
@@ -60,15 +76,24 @@ export class ExpenseFormDialog implements OnChanges {
 
   close(): void { this.visible = false; this.visibleChange.emit(false); }
 
+  get dateErrorMessage(): string {
+    return this.form.controls.date.hasError('pastDate')
+      ? 'New expenses cannot be dated in the past.'
+      : 'Choose a valid date.';
+  }
+
   submit(): void {
     this.form.markAllAsTouched();
     if (this.form.invalid || this.saving) return;
     const value = this.form.getRawValue();
+    const selectedDate = value.date!;
     const input: ExpenseInput = {
       description: value.description!.trim(),
       amount: value.amount!,
       category: value.category as ExpenseInput['category'],
-      date: value.date!.toISOString().slice(0, 10),
+      // Keep the calendar's local day; converting midnight to UTC can shift it
+      // to the previous date in time zones ahead of UTC.
+      date: `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`,
       paymentMethod: value.paymentMethod as ExpenseInput['paymentMethod'],
       notes: (value.notes ?? '').trim()
     };

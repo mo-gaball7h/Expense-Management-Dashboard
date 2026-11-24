@@ -5,5 +5,3 @@
 .dashboard-loading { display:flex; align-items:center; gap:10px; margin:18px 0; padding:18px 20px; border:1px solid #e2e8f0; border-radius:12px; background:#ffffff; color:#64748b; font-size:13px; }
 .dashboard-loading i { color:#6478f5; }
 .error-banner { display:flex; align-items:center; gap:9px; border:1px solid #fecdd3; background:#fff1f2; color:#be123c; }
-body.dark-mode app-dashboard-page .dashboard-loading { background:#111c2e; border-color:#263449; color:#cbd5e1; }
-body.dark-mode app-dashboard-page .error-banner { background:#3b1722; border-color:#71303b; color:#fda4af; }

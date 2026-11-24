@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AuthService } from '../../core/services/auth.service';
+import { PermissionService } from '../../core/services/permission.service';
+import { Role } from '../../core/models/auth.model';
 
 @Component({
   selector: 'app-main-layout',
@@ -15,9 +18,28 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 export class MainLayout implements OnInit {
   menuOpen = false;
   userMenuOpen = false;
+  accessMenuOpen = false;
   isDarkMode = false;
 
-  constructor(private router: Router, private confirmation: ConfirmationService) {}
+  constructor(
+    private router: Router,
+    private confirmation: ConfirmationService,
+    private auth: AuthService,
+    public permissions: PermissionService
+  ) {}
+
+  get currentUser() { return this.auth.currentUser; }
+
+  get avatarInitials(): string {
+    return (this.currentUser?.name ?? 'User').split(/\s+/).map(part => part[0]).slice(0, 2).join('').toUpperCase();
+  }
+
+  get roleLabel(): string {
+    const labels: Record<Role, string> = {
+      admin: 'Administrator', manager: 'Finance Manager', accountant: 'Accountant', viewer: 'Read-only Viewer'
+    };
+    return this.currentUser ? labels[this.currentUser.role] : 'Guest';
+  }
 
   ngOnInit(): void {
     this.isDarkMode = localStorage.getItem('theme') === 'dark';
@@ -58,11 +80,10 @@ export class MainLayout implements OnInit {
       acceptButtonStyleClass: 'p-button-danger',
       rejectButtonStyleClass: 'p-button-secondary',
       defaultFocus: 'reject',
-      closeOnEscape: true,
-      dismissableMask: true,
+      closeOnEscape: false,
+      dismissableMask: false,
       accept: () => {
-        sessionStorage.removeItem('isLoggedIn');
-        localStorage.removeItem('isLoggedIn');
+        this.auth.signOut();
         this.router.navigate(['/login']);
       }
     });

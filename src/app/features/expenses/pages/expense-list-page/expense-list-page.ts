@@ -13,6 +13,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { Expense, EXPENSE_CATEGORIES, PAYMENT_METHODS } from '../../../../core/models/expense.model';
 import { ExpenseService } from '../../../../core/services/expense.service';
+import { PermissionService } from '../../../../core/services/permission.service';
 import { ExpenseFormDialog } from '../../components/expense-form-dialog/expense-form-dialog';
 
 @Component({
@@ -30,6 +31,12 @@ export class ExpenseListPage implements OnInit, OnDestroy {
   selectedCategory: string | null = null;
   selectedPayment: string | null = null;
   dateRange: Date[] | null = null;
+  readonly datePickerPanelStyles = {
+    '--p-datepicker-select-month-hover-background': '#1e293b',
+    '--p-datepicker-select-year-hover-background': '#1e293b',
+    '--p-datepicker-select-month-hover-color': '#f8fafc',
+    '--p-datepicker-select-year-hover-color': '#f8fafc'
+  };
   formVisible = false;
   selectedExpense: Expense | null = null;
   detailsVisible = false;
@@ -42,7 +49,8 @@ export class ExpenseListPage implements OnInit, OnDestroy {
     private service: ExpenseService, 
     private confirmation: ConfirmationService, 
     private messages: MessageService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    public permissions: PermissionService
   ) {}
 
   ngOnInit(): void {
@@ -78,13 +86,22 @@ export class ExpenseListPage implements OnInit, OnDestroy {
   private startOfDay(d: Date): Date { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
   private endOfDay(d: Date): Date { return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59, 59, 999); }
   
-  openAdd(): void { this.selectedExpense = null; this.formVisible = true; }
-  openEdit(expense: Expense): void { this.selectedExpense = expense; this.formVisible = true; }
+  openAdd(): void {
+    if (!this.permissions.has('expenses.create')) return;
+    this.selectedExpense = null;
+    this.formVisible = true;
+  }
+  openEdit(expense: Expense): void {
+    if (!this.permissions.has('expenses.update')) return;
+    this.selectedExpense = expense;
+    this.formVisible = true;
+  }
   openDetails(expense: Expense): void { this.selectedExpense = expense; this.detailsVisible = true; }
   onSaved(): void { this.messages.add({ severity: 'success', summary: 'Saved', detail: 'Expense saved successfully.' }); }
   clearFilters(): void { this.search = ''; this.selectedCategory = null; this.selectedPayment = null; this.dateRange = null; }
   
   deleteExpense(expense: Expense): void {
+    if (!this.permissions.has('expenses.delete')) return;
     this.confirmation.confirm({
       header: 'Delete this expense?',
       message: 'This will permanently remove the expense from your records. You can’t undo this action.',
@@ -96,8 +113,8 @@ export class ExpenseListPage implements OnInit, OnDestroy {
       acceptButtonStyleClass: 'p-button-danger',
       rejectButtonStyleClass: 'p-button-secondary',
       defaultFocus: 'reject',
-      closeOnEscape: true,
-      dismissableMask: true,
+      closeOnEscape: false,
+      dismissableMask: false,
       accept: () => this.service.deleteExpense(expense.id).subscribe({
         next: () => this.messages.add({ severity: 'success', summary: 'Deleted', detail: 'Expense deleted successfully.' }),
         error: () => this.messages.add({ severity: 'error', summary: 'Error', detail: 'Could not delete the expense.' })

@@ -5,6 +5,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { ExpenseService } from '../../../../core/services/expense.service';
+import { PermissionService } from '../../../../core/services/permission.service';
 
 @Component({
   selector: 'app-settings-page',
@@ -15,8 +16,14 @@ import { ExpenseService } from '../../../../core/services/expense.service';
   styleUrl: './settings-page.scss'
 })
 export class SettingsPage {
-  constructor(private service: ExpenseService, private confirmation: ConfirmationService, private messages: MessageService) {}
+  constructor(
+    private service: ExpenseService,
+    private confirmation: ConfirmationService,
+    private messages: MessageService,
+    public permissions: PermissionService
+  ) {}
   reset(): void {
+    if (!this.permissions.has('settings.reset')) return;
     this.confirmation.confirm({
       header: 'Reset demo data',
       message: 'This will replace your current expenses with the original sample data. Continue?',

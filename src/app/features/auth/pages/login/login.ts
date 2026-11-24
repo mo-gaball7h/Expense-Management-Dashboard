@@ -89,9 +89,8 @@ export class LoginComponent {
     this.authService.signIn(username ?? '', password ?? '').pipe(
       finalize(() => this.loading = false)
     ).subscribe({
-      next: () => {
-        sessionStorage.setItem('isLoggedIn', 'true');
-        this.messageService.add({ severity: 'success', summary: 'Welcome', detail: 'Logged in successfully.' });
+      next: user => {
+        this.messageService.add({ severity: 'success', summary: 'Welcome', detail: `Signed in as ${user.name}.` });
         this.router.navigate(['/dashboard']);
       },
       error: error => this.messageService.add({
