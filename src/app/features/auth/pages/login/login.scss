@@ -224,14 +224,6 @@
 }
 .login-form ::ng-deep .submit-button .p-button:hover { transform: translateY(-1px); box-shadow: 0 11px 22px rgba(79, 70, 229, 0.25); }
 
-.demo-access { display: flex; align-items: center; gap: 11px; margin-top: 25px; padding: 13px 14px; border: 1px solid #e3e8f6; border-radius: 11px; background: #f8f9ff; animation: fade-rise 0.28s ease both; }
-.demo-icon { display: grid; flex: 0 0 30px; width: 30px; height: 30px; place-items: center; border-radius: 9px; background: #eef2ff; color: #4f46e5; font-size: 13px; }
-.demo-access div { display: grid; gap: 4px; }
-.demo-access strong { color: #334155; font-size: 11px; }
-.demo-access small { display: flex; flex-wrap: wrap; gap: 5px; color: #64748b; font-size: 10px; }
-.demo-access small b { color: #4338ca; font-weight: 700; }
-.demo-access small span { color: #a0a9b8; }
-
 .recovery-notice { display: flex; gap: 9px; align-items: flex-start; padding: 11px 12px; border: 1px solid #bfdbfe; border-radius: 10px; background: #eff6ff; color: #1d4ed8; font-size: 11px; line-height: 1.55; }
 .recovery-notice i { margin-top: 1px; }
 .back-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-top: 2px; color: #64748b; }
@@ -295,11 +287,6 @@
 :host-context(body.dark-mode) .input-wrapper input::placeholder { color: #718096; }
 :host-context(body.dark-mode) .password-toggle { color: #94a3b8; }
 :host-context(body.dark-mode) .password-toggle:hover { background: #263449; color: #e2e8f0; }
-:host-context(body.dark-mode) .demo-access { background: #0d1727; border-color: #293950; }
-:host-context(body.dark-mode) .demo-access strong { color: #e2e8f0; }
-:host-context(body.dark-mode) .demo-access small { color: #94a3b8; }
-:host-context(body.dark-mode) .demo-access small b { color: #c7d2fe; }
-:host-context(body.dark-mode) .demo-icon { background: #252454; color: #a5b4fc; }
 :host-context(body.dark-mode) .recovery-notice { background: #13263a; border-color: #294760; color: #c6e4ff; }
 :host-context(body.dark-mode) .login-security { color: #8493a8; }
 
@@ -333,7 +320,6 @@
   .login-panel { padding: 30px 16px 38px; }
   .login-card { padding: 26px 22px; border-radius: 17px; }
   .login-header h2 { font-size: 24px; }
-  .demo-access { align-items: flex-start; }
 }
 
 @media (prefers-reduced-motion: reduce) {
